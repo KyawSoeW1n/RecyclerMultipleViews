@@ -1,4 +1,4 @@
-package com.example.recyclermultipleview;
+package com.example.recyclermultipleview.model;
 
 public class Video {
     public Video(String name, String title, String time) {

@@ -1,4 +1,4 @@
-package com.example.recyclermultipleview;
+package com.example.recyclermultipleview.model;
 
 public class Chat {
     public Chat(String name, String time) {

@@ -1,12 +1,19 @@
-package com.example.recyclermultipleview;
+package com.example.recyclermultipleview.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+
+import com.example.recyclermultipleview.R;
+import com.example.recyclermultipleview.adapter.RecyclerAdapter;
+import com.example.recyclermultipleview.decorator.RecyclerDotLineDecorator;
+import com.example.recyclermultipleview.model.Chat;
+import com.example.recyclermultipleview.model.Video;
 
 import java.util.ArrayList;
 
@@ -15,15 +22,18 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerAdapter recyclerAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    ArrayList<Object> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerView);
-        layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        setUpDecorationForRecyclerView();
+        loadData();
+    }
 
-        ArrayList<Object> list = new ArrayList<>();
+    private void loadData() {
         list.add(new Chat("Nurat", "1:00 AM"));
         list.add(new Chat("Wisdom", "2:00 AM"));
         list.add(new Chat("Tope", "3:00 AM"));
@@ -40,13 +50,21 @@ public class MainActivity extends AppCompatActivity {
         list.add(new Video("Funke", "Sweden", "10:10 AM"));
         list.add(new Chat("Samuel", "11:00 AM"));
         list.add(new Chat("Opeyemi", "12:00 AM"));
-        recyclerAdapter = new RecyclerAdapter(this, list);
+        recyclerAdapter.updateData(list);
+    }
+
+    private void setUpDecorationForRecyclerView() {
+        recyclerAdapter = new RecyclerAdapter(this);
+        layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+
+        //dot-line Decorator
+//        recyclerView.addItemDecoration(new RecyclerDotLineDecorator(ContextCompat.getDrawable(this, R.drawable.line_dashed)));
+
+        //line decorator
+//        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-
         recyclerView.setAdapter(recyclerAdapter);
     }
 }

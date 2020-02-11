@@ -1,4 +1,4 @@
-package com.example.recyclermultipleview;
+package com.example.recyclermultipleview.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,15 +9,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.recyclermultipleview.Constants;
+import com.example.recyclermultipleview.R;
+import com.example.recyclermultipleview.model.Chat;
+import com.example.recyclermultipleview.model.Video;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private List<Object> mData;
 
-    public RecyclerAdapter(Context context, List<Object> data) {
+    public RecyclerAdapter(Context context) {
         this.context = context;
-        this.mData = data;
     }
 
     public int getItemViewType(int position) {
@@ -38,12 +43,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         RecyclerView.ViewHolder viewHolder;
         switch (viewType) {
             case Constants.TYPE_CHAT:
-                layout = R.layout.recyclerview_adapterchat;
+                layout = R.layout.recyclerview_chat_row;
                 View chatView = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
                 viewHolder = new ChatViewHolder(chatView);
                 break;
             case Constants.TYPE_VIDEO:
-                layout = R.layout.recyclerview_adapter2;
+                layout = R.layout.recyclerview_video_row;
                 View videoView = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
                 viewHolder = new VideoViewHolder(videoView);
                 break;
@@ -72,6 +77,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    public void updateData(ArrayList<Object> list) {
+        this.mData = list;
+        notifyDataSetChanged();
     }
 
     public class ChatViewHolder extends RecyclerView.ViewHolder {
